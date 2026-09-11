@@ -1,20 +1,41 @@
-use std::io::{self, BufRead};
+// TODO: trait Shape with one method: fn area(&self) -> f64
+// TODO: struct Square { side: f64 }
+// TODO: struct Triangle { base: f64, height: f64 }
+// TODO: impl Shape for each of them
 
-// TODO: fn longer<'a>(a: &'a str, b: &'a str) -> &'a str
-//       returns the longer of the two; `a` on a tie.
-fn longer<'a>(a: &'a str, b: &'a str) -> &'a str {
-    if b.len() > a.len() {
-        return b;
-    }
-    return a;
+trait Shape {
+    fn area(&self) -> f64;
+}
+struct Square {
+    side: f64,
+}
+struct Triangle {
+    base: f64,
+    height: f64,
 }
 
+impl Shape for Triangle {
+    fn area(&self) -> f64 {
+        (self.base * self.height) / 2.0
+    }
+}
+impl Shape for Square {
+    fn area(&self) -> f64 {
+        self.side * self.side
+    }
+}
 fn main() {
-    let stdin = io::stdin();
-    let mut lines = stdin.lock().lines();
-    let a = lines.next().unwrap().unwrap();
-    let b = lines.next().unwrap().unwrap();
+    // TODO: build a Vec<Box<dyn Shape>> with the square then the triangle,
+    //       then print each area with {:.2} on its own line.
+    let v: Vec<Box<dyn Shape>> = vec![
+        Box::new(Square { side: 3.0 }),
+        Box::new(Triangle {
+            base: 4.0,
+            height: 5.0,
+        }),
+    ];
 
-    // TODO: print the result of calling longer on a and b.
-    println!("{}", longer(&a, &b));
+    for shape in v {
+        println!("{}", shape.area());
+    }
 }
