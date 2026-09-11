@@ -1,14 +1,15 @@
-macro_rules! sum {
-    ($($x:expr),*) => {
-        {
-            let mut sum = 0;
-            $(sum+=$x;)*
-            sum
-        }
-    };
-}
+use std::io::{self, BufRead};
 
 fn main() {
-    let sum = sum!(1, 2, 3, 4, 5);
-    println!("{}", sum);
+    let stdin = io::stdin();
+    let mut line = String::new();
+    stdin.lock().read_line(&mut line).unwrap();
+    let n: i32 = line.trim().parse().unwrap();
+    let raw: *const i32 = &n;
+
+    // TODO: print the value behind `raw`, dereferencing it in an unsafe block.
+    unsafe {
+        let v = *raw;
+        println!("{}", v);
+    }
 }
