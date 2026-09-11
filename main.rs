@@ -1,11 +1,14 @@
-use std::{cell::RefCell, rc::Rc};
+macro_rules! sum {
+    ($($x:expr),*) => {
+        {
+            let mut sum = 0;
+            $(sum+=$x;)*
+            sum
+        }
+    };
+}
 
 fn main() {
-    let r = Rc::new(RefCell::new(0));
-
-    for _ in 0..3 {
-        let r1 = Rc::clone(&r);
-        *r1.borrow_mut() += 1;
-    }
-    println!("{}", r.borrow());
+    let sum = sum!(1, 2, 3, 4, 5);
+    println!("{}", sum);
 }
