@@ -1,0 +1,10 @@
+[package]
+name = "shipthatcode-rust-advanced"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[[bin]]
+name = "shipthatcode-rust-advanced"
+path = "main.rs"
