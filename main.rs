@@ -1,41 +1,24 @@
-// TODO: trait Shape with one method: fn area(&self) -> f64
-// TODO: struct Square { side: f64 }
-// TODO: struct Triangle { base: f64, height: f64 }
-// TODO: impl Shape for each of them
+use std::future::Future;
+use std::pin::Pin;
+use std::task::{Context, Poll};
 
-trait Shape {
-    fn area(&self) -> f64;
+struct Doubler {
+    n: i32,
 }
-struct Square {
-    side: f64,
-}
-struct Triangle {
-    base: f64,
-    height: f64,
-}
+impl Future for Doubler {
+    type Output = i32;
 
-impl Shape for Triangle {
-    fn area(&self) -> f64 {
-        (self.base * self.height) / 2.0
+    fn poll(self: Pin<&mut Self>, _: &mut Context) -> Poll<Self::Output> {
+        Poll::Ready(self.n * 2)
     }
 }
-impl Shape for Square {
-    fn area(&self) -> f64 {
-        self.side * self.side
-    }
+
+fn double(n: i32) -> Doubler {
+    Doubler { n }
 }
+
 fn main() {
-    // TODO: build a Vec<Box<dyn Shape>> with the square then the triangle,
-    //       then print each area with {:.2} on its own line.
-    let v: Vec<Box<dyn Shape>> = vec![
-        Box::new(Square { side: 3.0 }),
-        Box::new(Triangle {
-            base: 4.0,
-            height: 5.0,
-        }),
-    ];
-
-    for shape in v {
-        println!("{}", shape.area());
-    }
+    // TODO: build the future for 7, bind it to _fut, and print `created future`.
+    let _fut = double(7);
+    println!("created future")
 }
